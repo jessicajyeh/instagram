@@ -17,6 +17,7 @@
 		68EC55B11F01CE2900CE39BC /* instagramTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68EC55B01F01CE2900CE39BC /* instagramTests.swift */; };
 		68EC55BC1F01CE2900CE39BC /* instagramUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68EC55BB1F01CE2900CE39BC /* instagramUITests.swift */; };
 		68EC55CA1F02FDB900CE39BC /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68EC55C91F02FDB900CE39BC /* LoginViewController.swift */; };
+		68EC55CC1F030A2300CE39BC /* FeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68EC55CB1F030A2300CE39BC /* FeedViewController.swift */; };
 		DCBDB2806A0ED94D961CAFB6 /* Pods_instagramUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D7685C1F2F3D83D455FDF9D2 /* Pods_instagramUITests.framework */; };
 /* End PBXBuildFile section */
 
@@ -55,6 +56,7 @@
 		68EC55BB1F01CE2900CE39BC /* instagramUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = instagramUITests.swift; sourceTree = "<group>"; };
 		68EC55BD1F01CE2900CE39BC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		68EC55C91F02FDB900CE39BC /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		68EC55CB1F030A2300CE39BC /* FeedViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedViewController.swift; sourceTree = "<group>"; };
 		693263EA9CF8B38E7626AB43 /* Pods-instagramTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-instagramTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-instagramTests/Pods-instagramTests.debug.xcconfig"; sourceTree = "<group>"; };
 		B9A2E98F6FF87DAD3B3941EA /* Pods-instagramUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-instagramUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-instagramUITests/Pods-instagramUITests.release.xcconfig"; sourceTree = "<group>"; };
 		B9CB0F0713B339AB576674BA /* Pods-instagramUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-instagramUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-instagramUITests/Pods-instagramUITests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -119,6 +121,7 @@
 				68EC559B1F01CE2800CE39BC /* AppDelegate.swift */,
 				68EC559D1F01CE2800CE39BC /* ViewController.swift */,
 				68EC559F1F01CE2800CE39BC /* Main.storyboard */,
+				68EC55CB1F030A2300CE39BC /* FeedViewController.swift */,
 				68EC55C91F02FDB900CE39BC /* LoginViewController.swift */,
 				68EC55A21F01CE2800CE39BC /* Assets.xcassets */,
 				68EC55A41F01CE2800CE39BC /* LaunchScreen.storyboard */,
@@ -451,6 +454,7 @@
 			files = (
 				68EC55CA1F02FDB900CE39BC /* LoginViewController.swift in Sources */,
 				68EC559E1F01CE2800CE39BC /* ViewController.swift in Sources */,
+				68EC55CC1F030A2300CE39BC /* FeedViewController.swift in Sources */,
 				68EC559C1F01CE2800CE39BC /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

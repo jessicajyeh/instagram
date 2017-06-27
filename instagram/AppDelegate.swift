@@ -24,6 +24,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 configuration.server = "https://shielded-taiga-67787.herokuapp.com/parse"
             })
         )
+        
+        if PFUser.current() != nil {
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let feedViewController = storyboard.instantiateViewController(withIdentifier: "FeedViewController")
+            window?.rootViewController = feedViewController
+        }
+        
+        NotificationCenter.default.addObserver(forName: NSNotification.Name("logoutNotfication"), object: nil, queue: OperationQueue.main, using: { (Notification) in
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let vc = storyboard.instantiateViewController(withIdentifier: "LoginViewController") as! LoginViewController
+            self.window?.rootViewController = vc
+        })
+        
         return true
     }
 
