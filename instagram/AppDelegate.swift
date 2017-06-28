@@ -27,7 +27,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         if PFUser.current() != nil {
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            let feedViewController = storyboard.instantiateViewController(withIdentifier: "FeedViewController")
+            let feedViewController = storyboard.instantiateViewController(withIdentifier: "NavigationController")
             window?.rootViewController = feedViewController
         }
         

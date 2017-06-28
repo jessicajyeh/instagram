@@ -43,23 +43,28 @@ class PhotoTakerViewController: UIViewController, UIImagePickerControllerDelegat
     func imagePickerController(_ picker: UIImagePickerController,
                                didFinishPickingMediaWithInfo info: [String : Any]) {
         // Get the image captured by the UIImagePickerController
-        let originalImage = info[UIImagePickerControllerOriginalImage] as! UIImage
-        let editedImage = info[UIImagePickerControllerEditedImage] as! UIImage
+        let originalImage = info[UIImagePickerControllerOriginalImage] as? UIImage
         
-        // Do something with the images (based on your use case)
-        photoView.image = editedImage
-        
-        // Dismiss UIImagePickerController to go back to your original view controller
+        let editedImage = info[UIImagePickerControllerEditedImage] as?UIImage
+        if editedImage != nil {
+            photoView.image = editedImage
+        } else {
+            photoView.image = originalImage
+        }
         dismiss(animated: true, completion: nil)
     }
 
     
     @IBAction func onPost(_ sender: Any) {
+        let sizeImage = resizeImage(image: photoView.image!, newWidth: 800)
+        photoView.image = sizeImage
         Post.postUserImage(image: photoView.image, withCaption: captionField.text) { (success: Bool, error: Error?) in
-            if error != nil {
+            if error == nil {
+                print("posting image")
                 self.dismiss(animated: true, completion: nil)
             } else {
                 print(error?.localizedDescription as Any)
+                print("erroring")
             }
         }
     }
