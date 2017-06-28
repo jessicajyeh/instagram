@@ -15,20 +15,17 @@ class PhotoTakerViewController: UIViewController, UIImagePickerControllerDelegat
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
     @IBAction func takePicture(_ sender: Any) {
         let vc = UIImagePickerController()
         vc.delegate = self
         vc.allowsEditing = true
-        //        vc.sourceType = UIImagePickerControllerSourceType.camera
-        
+        // vc.sourceType = UIImagePickerControllerSourceType.camera
         if UIImagePickerController.isSourceTypeAvailable(.camera) {
             print("Camera is available 📸")
             vc.sourceType = .camera
@@ -74,13 +71,9 @@ class PhotoTakerViewController: UIViewController, UIImagePickerControllerDelegat
     }
     
     func resizeImage(image: UIImage, newWidth: CGFloat) -> UIImage {
-        
         let scale = newWidth / image.size.width
         let newHeight = image.size.height * scale
-        
         UIGraphicsBeginImageContext(CGSize(width: newWidth, height: newHeight))
-        
-        
         image.draw(in: CGRect(x: 0, y: 0,width: newWidth, height: newHeight))
         let newImage = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
@@ -89,7 +82,6 @@ class PhotoTakerViewController: UIViewController, UIImagePickerControllerDelegat
     }
     
     func resizeToScreenSize(image: UIImage)->UIImage{
-        
         let screenSize = self.view.bounds.size
         return resizeImage(image: image, newWidth: screenSize.width)
     }

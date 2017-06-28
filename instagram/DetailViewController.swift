@@ -32,13 +32,11 @@ class DetailViewController: UIViewController {
             }
         }
         
-        
         if let date = post?.createdAt {
             let dateFormatter = DateFormatter()
             dateFormatter.dateStyle = .medium
             dateFormatter.timeStyle = .short
             let dateString = dateFormatter.string(from: date)
-            print(dateString) // Prints: Jun 28, 2017, 2:08 PM
             timeLabel.text = dateString
         }
     }

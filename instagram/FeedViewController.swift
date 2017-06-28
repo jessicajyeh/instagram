@@ -13,6 +13,7 @@ class FeedViewController: UIViewController, UITableViewDataSource {
 
     @IBOutlet weak var tableView: UITableView!
     var feedPosts: [PFObject] = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.dataSource = self
@@ -46,6 +47,8 @@ class FeedViewController: UIViewController, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "PostCell", for: indexPath) as! PostCell
         let currPost = feedPosts[indexPath.row]
+        
+        //setting the image
         if let image = currPost["media"] as? PFFile {
             image.getDataInBackground { (imageData: Data!, error: Error?) in
                 if (imageData) != nil {
@@ -56,7 +59,24 @@ class FeedViewController: UIViewController, UITableViewDataSource {
                 }
             }
         }
+        
+        //setting the caption
         cell.captionLabel.text = currPost["caption"] as? String
+        
+        //setting the user
+        let user = currPost["author"] as? PFUser
+        cell.usernameLabel.text = user?.username
+        
+        //setting the date
+        if let date = currPost.createdAt {
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateStyle = .medium
+            dateFormatter.timeStyle = .short
+            let dateString = dateFormatter.string(from: date)
+            print(dateString) // Prints: Jun 28, 2017, 2:08 PM
+            cell.dateLabel.text = dateString
+        }
+
         return cell
     }
 
