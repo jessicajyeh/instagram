@@ -241,6 +241,7 @@
                                         </view>
                                         <connections>
                                             <outlet property="imageView" destination="vwq-ag-0qP" id="b5S-hZ-QJ2"/>
+                                            <segue destination="Nhl-he-t3s" kind="show" id="las-E7-mh2"/>
                                         </connections>
                                     </collectionViewCell>
                                 </cells>
@@ -383,4 +384,7 @@
             <point key="canvasLocation" x="3272.8000000000002" y="135.38230884557723"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="las-E7-mh2"/>
+    </inferredMetricsTieBreakers>
 </document>
