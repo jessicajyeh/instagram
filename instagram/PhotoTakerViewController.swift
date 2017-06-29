@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MBProgressHUD
 
 class PhotoTakerViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
@@ -53,15 +54,18 @@ class PhotoTakerViewController: UIViewController, UIImagePickerControllerDelegat
 
     
     @IBAction func onPost(_ sender: Any) {
+        MBProgressHUD.showAdded(to: self.view, animated: true)
         let sizeImage = resizeImage(image: photoView.image!, newWidth: 800)
         photoView.image = sizeImage
         Post.postUserImage(image: photoView.image, withCaption: captionField.text) { (success: Bool, error: Error?) in
             if error == nil {
                 print("posting image")
                 self.dismiss(animated: true, completion: nil)
+                MBProgressHUD.hide(for: self.view, animated: true)
             } else {
                 print(error?.localizedDescription as Any)
                 print("erroring")
+                MBProgressHUD.hide(for: self.view, animated: true)
             }
         }
     }
