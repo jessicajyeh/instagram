@@ -14,12 +14,18 @@ class ProfileViewController: UIViewController, UICollectionViewDataSource {
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var usernameLabel: UILabel!
     var userPosts: [PFObject] = []
+    @IBOutlet weak var profilePicView: UIImageView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         collectionView.dataSource = self
+        collectionView.alwaysBounceVertical = true
         loadUserPosts()
         usernameLabel.text = PFUser.current()?.username
+        
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: #selector(refreshControlAction(_:)), for: UIControlEvents.valueChanged)
+        collectionView.insertSubview(refreshControl, at: 0)
     }
 
     override func didReceiveMemoryWarning() {
@@ -36,7 +42,7 @@ class ProfileViewController: UIViewController, UICollectionViewDataSource {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PhotoCell", for: indexPath) as! PhotoCell
         let currPost = userPosts[indexPath.row]
         
-        //getting and converting image
+        //getting and converting image from PFFile to UIimage
         if let image = currPost["media"] as? PFFile {
             image.getDataInBackground { (imageData: Data!, error: Error?) in
                 if (imageData) != nil {
@@ -53,6 +59,17 @@ class ProfileViewController: UIViewController, UICollectionViewDataSource {
     
     func loadUserPosts() {
         let user = PFUser.current()
+        if let image = user?["picture"] as? PFFile {
+            image.getDataInBackground { (imageData: Data!, error: Error?) in
+                if (imageData) != nil {
+                    self.profilePicView.image = UIImage(data: imageData)
+                } else {
+                    print("image loading error here:")
+                    print(error?.localizedDescription as Any)
+                }
+            }
+        }
+
         let query = PFQuery(className: "Post")
         query.whereKey("author", equalTo: user!)
         query.addDescendingOrder("createdAt")
@@ -65,6 +82,14 @@ class ProfileViewController: UIViewController, UICollectionViewDataSource {
             }
         }
     }
+    
+    func refreshControlAction(_ refreshControl: UIRefreshControl) {
+        // Reload the tableView now that there is new data
+        loadUserPosts()
+        collectionView.reloadData()
+        refreshControl.endRefreshing()
+    }
+
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let cell = sender as? UICollectionViewCell {

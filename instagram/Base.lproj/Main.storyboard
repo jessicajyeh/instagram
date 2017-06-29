@@ -194,6 +194,7 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="a9p-cy-ZM4">
                                 <rect key="frame" x="0.0" y="212" width="375" height="375"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" red="0.93707782030105591" green="0.98202711343765259" blue="0.97232729196548462" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -262,8 +263,12 @@
                                     </collectionViewCell>
                                 </cells>
                             </collectionView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nM1-dk-nvF">
+                                <rect key="frame" x="16" y="72" width="60" height="60"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Username" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5Mo-Su-HzM">
-                                <rect key="frame" x="16" y="96" width="324" height="21"/>
+                                <rect key="frame" x="84" y="92" width="324" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
@@ -272,15 +277,78 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Profile" id="pcH-vH-ZeX"/>
+                    <navigationItem key="navigationItem" title="Profile" id="pcH-vH-ZeX">
+                        <barButtonItem key="rightBarButtonItem" title="Edit Profile" id="hxa-p0-YLz">
+                            <connections>
+                                <segue destination="eXT-gV-Gi2" kind="presentation" id="x9O-2a-1Ha"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="collectionView" destination="XOt-y7-bnc" id="muX-vs-6rO"/>
+                        <outlet property="profilePicView" destination="nM1-dk-nvF" id="btI-Px-hlc"/>
                         <outlet property="usernameLabel" destination="5Mo-Su-HzM" id="A8X-RR-Zd3"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IV1-DE-91H" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1653.5999999999999" y="909.89505247376314"/>
+        </scene>
+        <!--Edit Profile View Controller-->
+        <scene sceneID="T7s-El-cxb">
+            <objects>
+                <viewController id="Bma-xu-Don" customClass="EditProfileViewController" customModule="instagram" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="8kP-Mb-L90"/>
+                        <viewControllerLayoutGuide type="bottom" id="qFZ-yG-Ii0"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="odv-l5-zNe">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TIU-eN-czo">
+                                <rect key="frame" x="121" y="358" width="133" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Take Profile Picture"/>
+                                <connections>
+                                    <action selector="takePicture:" destination="Bma-xu-Don" eventType="touchUpInside" id="Hpy-aA-QnT"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iPy-1A-u9I">
+                                <rect key="frame" x="116" y="396" width="144" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Select Profile Picture"/>
+                                <connections>
+                                    <action selector="choosePicture:" destination="Bma-xu-Don" eventType="touchUpInside" id="bfp-9A-clY"/>
+                                </connections>
+                            </button>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hYF-Uc-dNo">
+                                <rect key="frame" x="67" y="95" width="240" height="240"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="JQK-50-oAn">
+                        <barButtonItem key="leftBarButtonItem" title="Cancel" id="Fih-0z-KUI">
+                            <connections>
+                                <action selector="onCancel:" destination="Bma-xu-Don" id="QYW-ce-v7l"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="Done" id="Qca-yk-kH5">
+                            <connections>
+                                <action selector="onDone:" destination="Bma-xu-Don" id="3Hk-5j-JoL"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="profilePicView" destination="hYF-Uc-dNo" id="lJK-sj-rbm"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="U6w-hF-aiN" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2476" y="1666"/>
         </scene>
         <!--Detail View Controller-->
         <scene sceneID="r0V-oi-Bby">
@@ -399,8 +467,26 @@
             </objects>
             <point key="canvasLocation" x="3272.8000000000002" y="135.38230884557723"/>
         </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="oMh-JN-svk">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="eXT-gV-Gi2" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="dT2-jB-6tv">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="Bma-xu-Don" kind="relationship" relationship="rootViewController" id="fQ9-yt-tRJ"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Xxk-1I-3dh" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1653.5999999999999" y="1665.5172413793105"/>
+        </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="qda-ta-BJf"/>
+        <segue reference="las-E7-mh2"/>
     </inferredMetricsTieBreakers>
 </document>

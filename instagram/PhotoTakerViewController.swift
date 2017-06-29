@@ -40,7 +40,6 @@ class PhotoTakerViewController: UIViewController, UIImagePickerControllerDelegat
             vc.sourceType = .photoLibrary
         }
         self.present(vc, animated: true, completion: nil)
-
     }
     
     @IBAction func choosePicture(_ sender: Any) {
