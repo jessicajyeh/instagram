@@ -13,9 +13,14 @@ class PhotoTakerViewController: UIViewController, UIImagePickerControllerDelegat
 
     @IBOutlet weak var photoView: UIImageView!
     @IBOutlet weak var captionField: UITextField!
+    let alertController = UIAlertController(title: "Error: Cannot share post", message: "Please choose an image", preferredStyle: .alert)
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        let OKAction = UIAlertAction(title: "OK", style: .default) { (action) in
+        }
+        alertController.addAction(OKAction)
     }
 
     override func didReceiveMemoryWarning() {
@@ -38,6 +43,14 @@ class PhotoTakerViewController: UIViewController, UIImagePickerControllerDelegat
 
     }
     
+    @IBAction func choosePicture(_ sender: Any) {
+        let vc = UIImagePickerController()
+        vc.delegate = self
+        vc.allowsEditing = true
+        vc.sourceType = .photoLibrary
+        self.present(vc, animated: true, completion: nil)
+    }
+    
     func imagePickerController(_ picker: UIImagePickerController,
                                didFinishPickingMediaWithInfo info: [String : Any]) {
         // Get the image captured by the UIImagePickerController
@@ -54,18 +67,22 @@ class PhotoTakerViewController: UIViewController, UIImagePickerControllerDelegat
 
     
     @IBAction func onPost(_ sender: Any) {
-        MBProgressHUD.showAdded(to: self.view, animated: true)
-        let sizeImage = resizeImage(image: photoView.image!, newWidth: 800)
-        photoView.image = sizeImage
-        Post.postUserImage(image: photoView.image, withCaption: captionField.text) { (success: Bool, error: Error?) in
-            if error == nil {
-                print("posting image")
-                self.dismiss(animated: true, completion: nil)
-                MBProgressHUD.hide(for: self.view, animated: true)
-            } else {
-                print(error?.localizedDescription as Any)
-                print("erroring")
-                MBProgressHUD.hide(for: self.view, animated: true)
+        if photoView.image == nil {
+            present(alertController, animated: true)
+        } else {
+            MBProgressHUD.showAdded(to: self.view, animated: true)
+            let sizeImage = resizeImage(image: photoView.image!, newWidth: 800)
+            photoView.image = sizeImage
+            Post.postUserImage(image: photoView.image, withCaption: captionField.text) { (success: Bool, error: Error?) in
+                if error == nil {
+                    print("posting image")
+                    self.dismiss(animated: true, completion: nil)
+                    MBProgressHUD.hide(for: self.view, animated: true)
+                } else {
+                    print(error?.localizedDescription as Any)
+                    print("erroring")
+                    MBProgressHUD.hide(for: self.view, animated: true)
+                }
             }
         }
     }
@@ -90,14 +107,4 @@ class PhotoTakerViewController: UIViewController, UIImagePickerControllerDelegat
         return resizeImage(image: image, newWidth: screenSize.width)
     }
     
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

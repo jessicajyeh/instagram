@@ -9,21 +9,24 @@
 import UIKit
 import Parse
 
-class FeedViewController: UIViewController, UITableViewDataSource {
+class FeedViewController: UIViewController, UITableViewDataSource, UIScrollViewDelegate, UITableViewDelegate {
 
     @IBOutlet weak var tableView: UITableView!
     var feedPosts: [PFObject] = []
+    var isMoreDataLoading = false
+    var currLimit = 20
     
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.dataSource = self
+        tableView.delegate = self
         refresh()
         
         //creating refreshControl
         let refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action: #selector(refreshControlAction(_:)), for: UIControlEvents.valueChanged)
         tableView.insertSubview(refreshControl, at: 0)
-        //Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.refresh), userInfo: nil, repeats: true)
+
     }
 
     override func didReceiveMemoryWarning() {
@@ -68,6 +71,7 @@ class FeedViewController: UIViewController, UITableViewDataSource {
         //setting the user
         let user = currPost["author"] as? PFUser
         cell.usernameLabel.text = user?.username
+        cell.usernameLabel2.text = user?.username
         
         //setting the date
         if let date = currPost.createdAt {
@@ -75,10 +79,8 @@ class FeedViewController: UIViewController, UITableViewDataSource {
             dateFormatter.dateStyle = .medium
             dateFormatter.timeStyle = .short
             let dateString = dateFormatter.string(from: date)
-            print(dateString) // Prints: Jun 28, 2017, 2:08 PM
             cell.dateLabel.text = dateString
         }
-
         return cell
     }
 
@@ -105,26 +107,44 @@ class FeedViewController: UIViewController, UITableViewDataSource {
                 detailVC.post = post
             }
         }
-        
     }
     
     func refreshControlAction(_ refreshControl: UIRefreshControl) {
-        
-        // ... Create the URLRequest `myRequest` ...
-        
-        // Configure session so that completion handler is executed on main UI thread
-//        let session = URLSession(configuration: .default, delegate: nil, delegateQueue: OperationQueue.main)
-//        let task: URLSessionDataTask = session.dataTask(with: request) { (data: Data?, response: URLResponse?, error: Error?) in
-//            
-            // ... Use the new data to update the data source ...
+        // Reload the tableView now that there is new data
+        refresh()
+        tableView.reloadData()
             
-            // Reload the tableView now that there is new data
-            refresh()
-            tableView.reloadData()
+        // Tell the refreshControl to stop spinning
+        refreshControl.endRefreshing()
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if (!isMoreDataLoading) {
+            let scrollViewContentHeight = tableView.contentSize.height
+            let scrollOffsetThreshold = scrollViewContentHeight - tableView.bounds.size.height
             
-            // Tell the refreshControl to stop spinning
-            refreshControl.endRefreshing()
-        //}
-        //task.resume()
+            // When the user has scrolled past the threshold, start requesting
+            if(scrollView.contentOffset.y > scrollOffsetThreshold && tableView.isDragging) {
+                isMoreDataLoading = true
+                let query = PFQuery(className: "Post")
+                query.includeKey("author")
+                query.addDescendingOrder("createdAt")
+                
+                //increasing query limit
+                currLimit += 20
+                query.limit = currLimit
+                
+                //making new query
+                query.findObjectsInBackground { (posts: [PFObject]?, error: Error?) in
+                    if let posts = posts {
+                        self.feedPosts = posts
+                        self.tableView.reloadData()
+                        self.isMoreDataLoading = false
+                    } else {
+                        print(error?.localizedDescription as Any)
+                    }
+                }
+            }
+        }
     }
 }

@@ -274,6 +274,7 @@
 				TargetAttributes = {
 					68EC55971F01CE2800CE39BC = {
 						CreatedOnToolsVersion = 8.3.3;
+						DevelopmentTeam = G7Q6EFAUQM;
 						ProvisioningStyle = Automatic;
 					};
 					68EC55AB1F01CE2900CE39BC = {
@@ -640,6 +641,7 @@
 			baseConfigurationReference = 3C2EADB703C3B0D5644A00ED /* Pods-instagram.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = G7Q6EFAUQM;
 				INFOPLIST_FILE = instagram/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.jessica.instagram;
@@ -653,6 +655,7 @@
 			baseConfigurationReference = 0A4CCE9F6E51E277F099A591 /* Pods-instagram.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = G7Q6EFAUQM;
 				INFOPLIST_FILE = instagram/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.jessica.instagram;

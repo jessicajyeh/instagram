@@ -10,14 +10,25 @@ import UIKit
 import Parse
 
 class LoginViewController: UIViewController {
+    
     @IBOutlet weak var usernameField: UITextField!
 
     @IBOutlet weak var passwordField: UITextField!
     
+    let existsAlertController = UIAlertController(title: "Account already exists for this username.", message: "Please try again", preferredStyle: .alert)
+    
+    let incorrectAlertController = UIAlertController(title: "Invalid username/password", message: "Please retry", preferredStyle: .alert)
+    
+    let emptyFieldAlertController = UIAlertController(title: "Username or password field is empty", message: "Please enter text", preferredStyle: .alert)
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        let OKAction = UIAlertAction(title: "OK", style: .default) { (action) in
+            // handle response here.
+        }
+        existsAlertController.addAction(OKAction)
+        incorrectAlertController.addAction(OKAction)
+        emptyFieldAlertController.addAction(OKAction)
     }
 
     override func didReceiveMemoryWarning() {
@@ -45,7 +56,11 @@ class LoginViewController: UIViewController {
             } else {
                 print(error?.localizedDescription as Any)
                 if error?._code == 202 {
-                    print("username already exists")
+                    self.present(self.existsAlertController, animated: true)
+                } else if error?._code == 200 || error?._code == 201 {
+                    self.present(self.emptyFieldAlertController, animated: true)
+                } else if error?._code == 101 {
+                    self.present(self.incorrectAlertController, animated: true)
                 }
             }
             
