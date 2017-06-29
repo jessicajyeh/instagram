@@ -18,10 +18,12 @@ class FeedViewController: UIViewController, UITableViewDataSource {
         super.viewDidLoad()
         tableView.dataSource = self
         refresh()
+        
+        //creating refreshControl
         let refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action: #selector(refreshControlAction(_:)), for: UIControlEvents.valueChanged)
         tableView.insertSubview(refreshControl, at: 0)
-        //lTimer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.refresh), userInfo: nil, repeats: true)
+        //Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.refresh), userInfo: nil, repeats: true)
     }
 
     override func didReceiveMemoryWarning() {
@@ -100,7 +102,6 @@ class FeedViewController: UIViewController, UITableViewDataSource {
             if let indexPath = tableView.indexPath(for: cell) {
                 let post = feedPosts[indexPath.row]
                 let detailVC = segue.destination as! DetailViewController
-                //detailVC.photoView = post[""]
                 detailVC.post = post
             }
         }

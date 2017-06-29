@@ -29,13 +29,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
             let feedViewController = storyboard.instantiateViewController(withIdentifier: "TabBarController")
             window?.rootViewController = feedViewController
-        } else {
-            NotificationCenter.default.addObserver(forName: NSNotification.Name("logoutNotfication"), object: nil, queue: OperationQueue.main, using: { (Notification) in
-                let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                let vc = storyboard.instantiateViewController(withIdentifier: "LoginViewController") as! LoginViewController
-                self.window?.rootViewController = vc
-            })
         }
+        NotificationCenter.default.addObserver(forName: NSNotification.Name("logoutNotfication"), object: nil, queue: OperationQueue.main, using: { (Notification) in
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let vc = storyboard.instantiateViewController(withIdentifier: "LoginViewController") as! LoginViewController
+            self.window?.rootViewController = vc
+        })
         
         return true
     }

@@ -7,14 +7,19 @@
 //
 
 import UIKit
+import Parse
 
 class ProfileViewController: UIViewController, UICollectionViewDataSource {
 
     @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var usernameLabel: UILabel!
+    var userPosts: [PFObject] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
         collectionView.dataSource = self
+        loadUserPosts()
+        usernameLabel.text = PFUser.current()?.username
     }
 
     override func didReceiveMemoryWarning() {
@@ -23,13 +28,43 @@ class ProfileViewController: UIViewController, UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        <#code#>
+        print(userPosts.count)
+        return userPosts.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        <#code#>
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PhotoCell", for: indexPath) as! PhotoCell
+        let currPost = userPosts[indexPath.row]
+        
+        //getting and converting image
+        if let image = currPost["media"] as? PFFile {
+            image.getDataInBackground { (imageData: Data!, error: Error?) in
+                if (imageData) != nil {
+                    cell.imageView.image = UIImage(data: imageData)
+                } else {
+                    print("image loading error here:")
+                    print(error?.localizedDescription as Any)
+                }
+            }
+        }
+        return cell
     }
 
+    
+    func loadUserPosts() {
+        let user = PFUser.current()
+        let query = PFQuery(className: "Post")
+        query.whereKey("author", equalTo: user!)
+        query.addDescendingOrder("createdAt")
+        query.findObjectsInBackground { (posts: [PFObject]?, error: Error?) in
+            if let posts = posts {
+                self.userPosts = posts
+                self.collectionView.reloadData()
+            } else {
+                print(error?.localizedDescription as Any)
+            }
+        }
+    }
     /*
     // MARK: - Navigation
 
