@@ -27,6 +27,8 @@ class FeedViewController: UIViewController, UITableViewDataSource, UIScrollViewD
         refreshControl.addTarget(self, action: #selector(refreshControlAction(_:)), for: UIControlEvents.valueChanged)
         tableView.insertSubview(refreshControl, at: 0)
 
+        let img = UIImage(named: "ig_header.jpg")
+        navigationController?.navigationBar.setBackgroundImage(img, for: .default)
     }
 
     override func didReceiveMemoryWarning() {

@@ -15,11 +15,18 @@ class LoginViewController: UIViewController {
 
     @IBOutlet weak var passwordField: UITextField!
     
+    @IBOutlet weak var signInButton: UIButton!
+    
+    @IBOutlet weak var signUpButton: UIButton!
+    
     let existsAlertController = UIAlertController(title: "Account already exists for this username.", message: "Please try again", preferredStyle: .alert)
     
     let incorrectAlertController = UIAlertController(title: "Invalid username/password", message: "Please retry", preferredStyle: .alert)
     
     let emptyFieldAlertController = UIAlertController(title: "Username or password field is empty", message: "Please enter text", preferredStyle: .alert)
+    
+    let borderAlpha : CGFloat = 0.7
+    let cornerRadius : CGFloat = 5.0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,6 +36,22 @@ class LoginViewController: UIViewController {
         existsAlertController.addAction(OKAction)
         incorrectAlertController.addAction(OKAction)
         emptyFieldAlertController.addAction(OKAction)
+        
+        signInButton.frame = CGRect(x: 87, y: 360, width: 90, height: 30)
+        signInButton.setTitleColor(UIColor.white, for: UIControlState.normal)
+        signInButton.backgroundColor = UIColor.clear
+        signInButton.layer.borderWidth = 1.0
+        signInButton.layer.borderColor = UIColor(white: 1.0, alpha: borderAlpha).cgColor
+        signInButton.layer.cornerRadius = cornerRadius
+        
+        signUpButton.frame = CGRect(x: 197, y: 360, width: 90, height: 30)
+        signUpButton.setTitleColor(UIColor.white, for: UIControlState.normal)
+        signUpButton.backgroundColor = UIColor.clear
+        signUpButton.layer.borderWidth = 1.0
+        signUpButton.layer.borderColor = UIColor(white: 1.0, alpha: borderAlpha).cgColor
+        signUpButton.layer.cornerRadius = cornerRadius
+
+
     }
 
     override func didReceiveMemoryWarning() {
