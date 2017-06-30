@@ -15,6 +15,7 @@ class ProfileViewController: UIViewController, UICollectionViewDataSource {
     @IBOutlet weak var usernameLabel: UILabel!
     var userPosts: [PFObject] = []
     @IBOutlet weak var profilePicView: UIImageView!
+    @IBOutlet weak var bioLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,6 +24,11 @@ class ProfileViewController: UIViewController, UICollectionViewDataSource {
         loadUserPosts()
         usernameLabel.text = PFUser.current()?.username
         
+        //making profile circle
+        profilePicView.layer.cornerRadius = (profilePicView.frame.size.width) / 2
+        profilePicView.layer.masksToBounds = true
+
+        //adding refreshControl
         let refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action: #selector(refreshControlAction(_:)), for: UIControlEvents.valueChanged)
         collectionView.insertSubview(refreshControl, at: 0)
@@ -69,7 +75,8 @@ class ProfileViewController: UIViewController, UICollectionViewDataSource {
                 }
             }
         }
-
+        self.bioLabel.text = user?["bio"] as? String
+        
         let query = PFQuery(className: "Post")
         query.whereKey("author", equalTo: user!)
         query.addDescendingOrder("createdAt")

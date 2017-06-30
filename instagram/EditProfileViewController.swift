@@ -12,10 +12,13 @@ import Parse
 class EditProfileViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
     @IBOutlet weak var profilePicView: UIImageView!
+    @IBOutlet weak var bioField: UITextField!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         let user = PFUser.current()
+        profilePicView.layer.cornerRadius = (profilePicView.frame.size.width) / 2
+        profilePicView.layer.masksToBounds = true
         
         if let image = user?["picture"] as? PFFile {
             image.getDataInBackground { (imageData: Data!, error: Error?) in
@@ -27,6 +30,7 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
                 }
             }
         }
+        bioField.text = user?["bio"] as? String
 
     }
 
@@ -78,9 +82,15 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
         let user = PFUser.current()!
         if profilePicView.image != nil {
             user["picture"] = Post.getPFFileFromImage(image: profilePicView.image)
-            user.saveInBackground()
         }
-        
+        user["bio"] = bioField.text
+        user.saveInBackground()
+
         dismiss(animated: true)
     }
+    
+    @IBAction func onTap(_ sender: Any) {
+        view.endEditing(true)
+    }
+    
 }

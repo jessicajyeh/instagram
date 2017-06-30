@@ -15,10 +15,14 @@ class PostCell: UITableViewCell {
     @IBOutlet weak var usernameLabel: UILabel!
     @IBOutlet weak var usernameLabel2: UILabel!
     @IBOutlet weak var dateLabel: UILabel!
+    @IBOutlet weak var profilePicView: UIImageView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        profilePicView.layer.cornerRadius = (profilePicView.frame.size.width) / 2
+        profilePicView.layer.masksToBounds = true
+
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

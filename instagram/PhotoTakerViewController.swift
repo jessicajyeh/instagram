@@ -106,4 +106,8 @@ class PhotoTakerViewController: UIViewController, UIImagePickerControllerDelegat
         return resizeImage(image: image, newWidth: screenSize.width)
     }
     
+    @IBAction func onTap(_ sender: Any) {
+        view.endEditing(true)
+    }
+
 }

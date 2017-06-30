@@ -64,7 +64,7 @@ class FeedViewController: UIViewController, UITableViewDataSource, UIScrollViewD
                 }
             }
         }
-        
+
         //setting the caption
         cell.captionLabel.text = currPost["caption"] as? String
         
@@ -72,6 +72,18 @@ class FeedViewController: UIViewController, UITableViewDataSource, UIScrollViewD
         let user = currPost["author"] as? PFUser
         cell.usernameLabel.text = user?.username
         cell.usernameLabel2.text = user?.username
+        
+        //setting the profile image
+        if let image = user?["picture"] as? PFFile {
+            image.getDataInBackground { (imageData: Data!, error: Error?) in
+                if (imageData) != nil {
+                    cell.profilePicView.image = UIImage(data: imageData)
+                } else {
+                    print("image loading error here:")
+                    print(error?.localizedDescription as Any)
+                }
+            }
+        }
         
         //setting the date
         if let date = currPost.createdAt {
